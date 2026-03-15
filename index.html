@@ -1,206 +1,229 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OXI | Hub & AI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OXI | Tech Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#070910;--panel:rgba(255,255,255,0.06);--card:#0f172a;--text:#e8edf7;--muted:#9aa4c6;--accent:#7cf7d4;--accent2:#7cb7f7;--border:rgba(255,255,255,0.08);}
-    *{box-sizing:border-box;scroll-behavior:smooth;}
-    body{margin:0;color:var(--text);font-family:"Manrope",system-ui;background:radial-gradient(1200px at 10% 20%,rgba(124,247,212,.15),transparent 60%),var(--bg);min-height:100vh;}
-    header{position:sticky;top:0;z-index:100;background:rgba(7,9,16,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;}
-    .logo-container{display:flex;align-items:center;gap:12px;text-decoration:none;}
-    .logo-img{width:35px;height:35px;border-radius:8px;object-fit:cover;border:1px solid var(--accent);}
-    .logo-text{font-family:"Space Grotesk",system-ui;font-weight:700;font-size:1.3rem;color:var(--accent);letter-spacing:1px;}
-    nav a{color:var(--muted);text-decoration:none;font-weight:700;margin-left:20px;font-size:14px;transition:.2s;}
-    nav a:hover{color:var(--accent);}
-    .btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#041025;border:none;padding:10px 20px;border-radius:12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;transition:.3s;}
-    .btn.secondary{background:transparent;color:var(--accent2);border:1px solid var(--accent2);}
-    main{max-width:1100px;margin:32px auto;padding:0 20px;}
-    .hero{background:var(--panel);border:1px solid var(--border);border-radius:24px;padding:40px;margin-bottom:40px;text-align:center;}
-    .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
-    .card{background:var(--card);border:1px solid var(--border);padding:24px;border-radius:20px;transition:.3s;}
-    .card:hover{border-color:var(--accent);transform:translateY(-5px);}
-    .tag{font-size:10px;text-transform:uppercase;background:rgba(124,247,212,.1);color:var(--accent);padding:4px 8px;border-radius:6px;margin-bottom:12px;display:inline-block;font-weight:700;}
-    .ai-section,.profile-section{background:linear-gradient(135deg, rgba(124,183,247,0.1), rgba(124,247,212,0.05));border:1px solid var(--accent2);border-radius:24px;padding:30px;margin-top:60px;}
-    #ai-response{background:rgba(0,0,0,.3);border-radius:12px;padding:15px;margin-top:15px;display:none;border-left:3px solid var(--accent2);font-size:14px;white-space:pre-wrap;}
-    input[type="text"], textarea, select{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;padding:12px;color:white;width:100%;}
-    textarea{min-height:120px;resize:vertical;}
-    .row{display:flex;gap:10px;align-items:center;}
-    .muted{color:var(--muted);font-size:13px;margin-top:8px;}
+    :root { --bg:#05070d; --card:#0c1220; --line:#1d2a45; --text:#eaf1ff; --muted:#99aac7; --accent:#56f0c2; --accent2:#6ea8ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,system-ui,sans-serif; background:radial-gradient(1000px 400px at 20% -20%, #11203f 5%, transparent 60%), var(--bg); color:var(--text); }
+    .wrap { max-width:1120px; margin:auto; padding:24px; }
+    .top { display:flex; justify-content:space-between; align-items:center; gap:12px; position:sticky; top:0; backdrop-filter:blur(10px); background:rgba(5,7,13,.8); border-bottom:1px solid #1a263f; z-index:8; padding:14px 24px; }
+    .brand { display:flex; gap:12px; align-items:center; font-weight:800; letter-spacing:.5px; }
+    .brand img { width:34px; height:34px; border-radius:10px; border:1px solid #34507f; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .chip { border:1px solid var(--line); color:var(--muted); border-radius:999px; font-size:12px; padding:6px 10px; }
+    .grid { display:grid; gap:18px; grid-template-columns:1.2fr .8fr; }
+    .card { background:linear-gradient(180deg, #0f182b, #0b1120); border:1px solid var(--line); border-radius:16px; padding:18px; }
+    h1,h2,h3 { margin:0 0 10px; }
+    .muted { color:var(--muted); }
+    .btn { border:none; border-radius:12px; padding:10px 14px; font-weight:700; cursor:pointer; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#04222b; }
+    .btn.ghost { background:transparent; color:var(--muted); border:1px solid var(--line); }
+    input, textarea, select { width:100%; background:#0b1426; color:var(--text); border:1px solid var(--line); border-radius:10px; padding:11px; margin-top:8px; }
+    textarea { min-height:110px; }
+    .row { display:flex; gap:10px; align-items:center; }
+    .list { display:grid; gap:12px; margin-top:10px; }
+    .post { border:1px solid var(--line); border-radius:14px; padding:14px; background:#0a1324; }
+    .media { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .media img,.media video { width:220px; border-radius:12px; border:1px solid var(--line); }
+    .media a { color:#93c5fd; font-size:13px; }
+    .small { font-size:12px; }
+    @media (max-width:900px){ .grid { grid-template-columns:1fr; } .top{position:static;} }
   </style>
 </head>
 <body>
-  <header>
-    <a href="#" class="logo-container">
-      <img src="assets/logo.png" alt="L" class="logo-img">
-      <div class="logo-text">OXI_PROJECT</div>
-    </a>
-    <nav>
-      <a href="#blog">Blog</a>
-      <a href="#ai-help">AI Destek</a>
-      <a href="#profile">Profil</a>
-      <a href="#games">Oyunlar</a>
-    </nav>
-    <div id="auth-area">
-      <div id="g_id_onload" data-client_id="980583011173-nf81b7cj5k36b3m14v0gv7mv59asfk7t.apps.googleusercontent.com" data-callback="onGoogleSignIn"></div>
-      <div class="g_id_signin" data-type="standard"></div>
-      <button class="btn" id="signout" style="display:none;" onclick="signOut()">Çıkış</button>
-    </div>
+  <header class="top">
+    <div class="brand"><img src="assets/logo.png" alt="logo"> OXI_PROJECT</div>
+    <div id="auth"></div>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1>ByteShift Blog</h1>
-      <p>Geleceğin mühendisinden teknoloji notları ve geliştirme günlükleri.</p>
-    </section>
-
-    <h2 id="blog">Son Yazılar</h2>
-    <div class="grid" id="main-feed"></div>
-
-    <section id="ai-help" class="ai-section">
-      <h3>🤖 OXI AI Asistan</h3>
-      <div class="row">
-        <input type="text" id="ai-input" placeholder="ByteShift projesi nedir?">
-        <select id="ai-provider" style="max-width:180px;">
-          <option value="chatgpt">ChatGPT</option>
-          <option value="gemini">Gemini</option>
-        </select>
-        <button class="btn" id="ai-ask">Sor</button>
-      </div>
-      <div id="ai-response"></div>
-    </section>
-
-    <section id="profile" class="profile-section" style="display:none;">
-      <h3>👤 Profil</h3>
-      <p class="muted">Profilin GitHub deposuna güvenli API üzerinden kaydedilir.</p>
-      <div style="display:grid;gap:10px;max-width:640px;">
-        <input type="text" id="profile-name" placeholder="Adın">
-        <textarea id="profile-bio" placeholder="Kısa biyografi"></textarea>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:10px;align-items:center;">
-        <button class="btn" id="profile-save">Profili Kaydet</button>
-        <span id="profile-status" class="muted"></span>
-      </div>
-    </section>
-
-    <section id="games" style="margin-top:60px;">
-      <h2>Mola Zamanı</h2>
-      <iframe src="https://itch.io/embed-upload/15327480?color=070910" width="100%" height="450" style="border-radius:20px;border:1px solid var(--border);"></iframe>
-    </section>
-  </main>
+  <main class="wrap" id="app"></main>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
-    const state = { user: null };
+    const state = { user:null, idToken:null, blog:[], apps:[], files:[] };
+    const ADMIN_EMAIL = ''; // İsteğe bağlı: sadece UI kontrolü, asıl kontrol backend'de ADMIN_EMAIL env ile yapılır.
 
-    const blogData = [
-      { title: 'ByteShift Geliştirme Günlüğü #1', desc: 'Android ve Windows uygulamalarını Linux üzerinde nasıl birleştiriyorum?', date: '15 Mart 2026' },
-      { title: 'Samsung PM991a Neden Alınmalı?', desc: 'Fiyat performans canavarı SSD incelemem.', date: '10 Mart 2026' },
-      { title: 'Pardus ve Alpine Linux Karşılaştırması', desc: 'Hafiflik ve yerellik arasında bir denge kurmak.', date: '1 Mart 2026' }
-    ];
+    const el = (tag, attrs={}, html='') => {
+      const n = document.createElement(tag);
+      Object.entries(attrs).forEach(([k,v]) => k === 'class' ? n.className = v : n.setAttribute(k,v));
+      if (html) n.innerHTML = html;
+      return n;
+    };
 
-    function loadBlog() {
-      const feed = document.getElementById('main-feed');
-      feed.innerHTML = blogData.map(post => `
-        <article class="card">
-          <span class="tag">Teknoloji</span>
-          <h3>${post.title}</h3>
-          <p style="color:var(--muted);font-size:14px;">${post.desc}</p>
-          <div style="margin-top:20px;display:flex;justify-content:space-between;align-items:center;">
-            <span style="font-size:12px;color:var(--muted);">${post.date}</span>
-            <a href="#" class="btn" style="padding:6px 12px;font-size:12px;">Devamını Oku</a>
-          </div>
-        </article>
-      `).join('');
+    function decodeJwt(token){
+      const p = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      return JSON.parse(decodeURIComponent(atob(p).split('').map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`).join('')));
     }
 
-    async function askAI() {
-      const question = document.getElementById('ai-input').value.trim();
-      const provider = document.getElementById('ai-provider').value;
-      const responseBox = document.getElementById('ai-response');
-      if (!question) return;
-      responseBox.style.display = 'block';
-      responseBox.textContent = 'Yanıt hazırlanıyor...';
-      try {
-        const res = await fetch(`/api/help/${provider}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question })
+    function formatBytes(bytes){
+      if (!bytes) return '0 B';
+      const units=['B','KB','MB','GB'];
+      let i=0,v=bytes;
+      while(v>=1024&&i<units.length-1){v/=1024;i++;}
+      return `${v.toFixed(1)} ${units[i]}`;
+    }
+
+    async function api(url, opts={}){
+      const res = await fetch(url, opts);
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
+    }
+
+    async function loadBlog(){
+      const data = await api('/api/blog/list');
+      state.blog = data.posts || [];
+    }
+
+    async function loadApps(){
+      const data = await api('/api/apps/list');
+      state.apps = data.apps || [];
+    }
+
+    function renderAuth(){
+      const area = document.getElementById('auth');
+      area.innerHTML = '';
+      if (!state.user) {
+        area.innerHTML = `<div id="g_id_onload" data-client_id="980583011173-nf81b7cj5k36b3m14v0gv7mv59asfk7t.apps.googleusercontent.com" data-callback="onGoogleSignIn"></div><div class="g_id_signin" data-type="standard"></div>`;
+        return;
+      }
+      const box = el('div', { class:'row' }, `<span class="small muted">${state.user.email}</span>`);
+      const out = el('button', { class:'btn ghost' }, 'Çıkış');
+      out.onclick = () => { state.user=null; state.idToken=null; renderAuth(); render(); };
+      box.appendChild(out); area.appendChild(box);
+    }
+
+    async function uploadFiles(section){
+      const uploaded = [];
+      for (const f of state.files) {
+        const base64 = await fileToBase64(f.file);
+        const data = await api('/api/uploads/save', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ idToken: state.idToken, fileName: f.file.name, mimeType: f.file.type, size: f.file.size, base64, section })
         });
-        if (!res.ok) throw new Error('request-failed');
-        const data = await res.json();
-        responseBox.innerHTML = `<strong>Asistan:</strong> ${data.answer || 'Yanıt alınamadı.'}`;
-      } catch (e) {
-        responseBox.textContent = 'Şu an yanıt alınamadı. Lütfen tekrar dene.';
+        uploaded.push(data.file);
       }
+      return uploaded;
     }
 
-    function decodeJwt(token) {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
-      return JSON.parse(jsonPayload);
-    }
-
-    async function loadProfileRemote(email){
-      try{
-        const res = await fetch(`/api/profile/get?email=${encodeURIComponent(email)}`);
-        if(!res.ok) throw new Error();
-        return await res.json();
-      }catch{
-        return null;
-      }
-    }
-
-    async function saveProfileRemote(email, profile){
-      const res = await fetch('/api/profile/save', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ email, profile })
+    function fileToBase64(file){
+      return new Promise((resolve,reject)=>{
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
       });
-      if(!res.ok) throw new Error('save-failed');
+    }
+
+    function render(){
+      const app = document.getElementById('app');
+      app.innerHTML = '';
+
+      const hero = el('section', { class:'card' }, `<h1>Modern Teknoloji Merkezi</h1><p class="muted">Blog, AI destek ve uygulama paylaşımları tek panelde.</p><div class="chips"><span class="chip">AI Asistan</span><span class="chip">Blog Yayınlama</span><span class="chip">Güvenli Profil</span></div>`);
+
+      const grid = el('section', { class:'grid' });
+      const left = el('div');
+      const right = el('div');
+
+      const blogCard = el('div', { class:'card' }, `<h2>Blog</h2><p class='muted'>Yazılar artık uzak depodan yüklenir.</p><div id='blog-list' class='list'></div>`);
+      const list = blogCard.querySelector('#blog-list');
+      if (!state.blog.length) list.innerHTML = `<div class='post small muted'>Henüz yazı yok.</div>`;
+      state.blog.forEach(p => {
+        const mediaHtml = (p.media || []).map(m => {
+          if ((m.mimeType || '').startsWith('image/')) return `<img src='${m.url}' alt='görsel'>`;
+          if ((m.mimeType || '').startsWith('video/')) return `<video src='${m.url}' controls></video>`;
+          return `<a href='${m.url}' target='_blank' rel='noreferrer'>📎 ${m.name || 'Dosya'} (${formatBytes(m.size)})</a>`;
+        }).join('');
+        const node = el('article', { class:'post' }, `<h3>${p.title}</h3><p class='small muted'>${new Date(p.createdAt).toLocaleString('tr-TR')} · ${p.author?.name || p.author?.email || 'yazar'}</p><p>${p.content}</p><div class='media'>${mediaHtml}</div>`);
+        list.appendChild(node);
+      });
+      left.appendChild(blogCard);
+
+      const blogComposer = el('div', { class:'card' }, `<h3>Yeni Blog Yazısı</h3><p class='small muted'>Yazı başına toplam dosya sınırı: 150 MB.</p>`);
+      if (!state.user) {
+        blogComposer.appendChild(el('p', { class:'small muted' }, 'Yazı paylaşmak için Google ile giriş yap.'));
+      } else {
+        const title = el('input', { placeholder:'Başlık' });
+        const content = el('textarea', { placeholder:'Yazı içeriği' });
+        const files = el('input', { type:'file', multiple:'multiple' });
+        const stat = el('div', { class:'small muted' });
+        files.onchange = () => {
+          state.files = [...files.files].map(file => ({ file }));
+          const total = state.files.reduce((s, x) => s + x.file.size, 0);
+          stat.textContent = `${state.files.length} dosya seçildi · ${formatBytes(total)}`;
+        };
+        const save = el('button', { class:'btn' }, 'Yazıyı Yayınla');
+        save.onclick = async () => {
+          try {
+            const total = state.files.reduce((s, x) => s + x.file.size, 0);
+            if (total > 150 * 1024 * 1024) throw new Error('Toplam dosya boyutu 150 MB üstünde.');
+            const media = await uploadFiles('blog');
+            await api('/api/blog/save', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ idToken: state.idToken, title: title.value, content: content.value, media })});
+            state.files = []; await loadBlog(); render();
+          } catch (e) { alert(`Blog kaydedilemedi: ${e.message}`); }
+        };
+        blogComposer.append(title, content, files, stat, save);
+      }
+      left.appendChild(blogComposer);
+
+      const aiCard = el('div', { class:'card' }, `<h3>AI Destek</h3>`);
+      const q = el('input', { placeholder:'Sorunu yaz' });
+      const provider = el('select'); provider.innerHTML = `<option value='chatgpt'>ChatGPT</option><option value='gemini'>Gemini</option>`;
+      const ask = el('button', { class:'btn' }, 'Yanıtla');
+      const out = el('div', { class:'small muted' });
+      ask.onclick = async () => {
+        try {
+          out.textContent = 'Yanıt bekleniyor...';
+          const data = await api(`/api/help/${provider.value}`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ question:q.value }) });
+          out.textContent = data.answer || 'Yanıt yok.';
+        } catch { out.textContent = 'AI servisine ulaşılamadı.'; }
+      };
+      aiCard.append(q, provider, ask, out);
+
+      const appCard = el('div', { class:'card' }, `<h3>Uygulamalar</h3><div id='apps-list' class='list'></div>`);
+      const appsList = appCard.querySelector('#apps-list');
+      if (!state.apps.length) appsList.innerHTML = `<div class='post small muted'>Henüz uygulama eklenmedi.</div>`;
+      state.apps.forEach(a => appsList.appendChild(el('div', { class:'post' }, `<strong>${a.name}</strong><p class='small muted'>${a.description}</p><a href='${a.url}' target='_blank' rel='noreferrer'>Aç</a>`)));
+
+      const appComposer = el('div', { class:'card' }, `<h3>Uygulama Ekle (Sadece Yönetici)</h3>`);
+      const canAdmin = state.user && (ADMIN_EMAIL ? state.user.email === ADMIN_EMAIL : true);
+      if (!canAdmin) {
+        appComposer.appendChild(el('p', { class:'small muted' }, 'Bu alan yalnızca yönetici için aktif. Backend, ADMIN_EMAIL ile zorunlu doğrulama yapar.'));
+      } else {
+        const name = el('input', { placeholder:'Uygulama adı' });
+        const desc = el('textarea', { placeholder:'Kısa açıklama' });
+        const url = el('input', { placeholder:'https://...' });
+        const save = el('button', { class:'btn' }, 'Uygulamayı Ekle');
+        save.onclick = async () => {
+          try {
+            await api('/api/apps/save', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ idToken: state.idToken, name:name.value, description:desc.value, url:url.value }) });
+            await loadApps(); render();
+          } catch (e) { alert(`Uygulama eklenemedi: ${e.message}`); }
+        };
+        appComposer.append(name, desc, url, save);
+      }
+
+      right.append(aiCard, appCard, appComposer);
+      grid.append(left, right);
+      app.append(hero, grid);
     }
 
     async function onGoogleSignIn(response){
       const payload = decodeJwt(response.credential);
-      state.user = {
-        email: payload.email,
-        name: payload.name
-      };
-
-      document.querySelector('.g_id_signin').style.display='none';
-      document.getElementById('signout').style.display='inline-block';
-      document.getElementById('profile').style.display='block';
-
-      const remote = await loadProfileRemote(state.user.email);
-      document.getElementById('profile-name').value = remote?.name || state.user.name || '';
-      document.getElementById('profile-bio').value = remote?.bio || '';
-      document.getElementById('profile-status').textContent = 'Giriş başarılı.';
+      state.user = { email: payload.email, name: payload.name };
+      state.idToken = response.credential;
+      renderAuth();
+      render();
     }
+    window.onGoogleSignIn = onGoogleSignIn;
 
-    function signOut() {
-      state.user = null;
-      location.reload();
-    }
-
-    document.getElementById('ai-ask').addEventListener('click', askAI);
-    document.getElementById('profile-save').addEventListener('click', async () => {
-      if (!state.user) return;
-      const name = document.getElementById('profile-name').value.trim();
-      const bio = document.getElementById('profile-bio').value.trim();
-      try {
-        await saveProfileRemote(state.user.email, { name, bio });
-        document.getElementById('profile-status').textContent = 'GitHub’a kaydedildi.';
-      } catch (e) {
-        document.getElementById('profile-status').textContent = 'Kaydedilemedi, sonra tekrar dene.';
-      }
-    });
-
-    window.onload = loadBlog;
+    (async function init(){
+      renderAuth();
+      try { await Promise.all([loadBlog(), loadApps()]); } catch {}
+      render();
+    })();
   </script>
 </body>
 </html>
