@@ -1,13 +1,16 @@
 const { ensureRepoEnv, readJson, writeJson } = require('../_repo');
 const { verifyGoogleIdToken } = require('../_auth');
+const { verifyTurnstile } = require('../_turnstile');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Only POST');
   if (!ensureRepoEnv()) return res.status(500).send('Missing GitHub env vars');
 
-  const { idToken, title, content, media = [] } = req.body || {};
+  const { idToken, turnstileToken, title, content, media = [] } = req.body || {};
   const user = await verifyGoogleIdToken(idToken);
   if (!user) return res.status(401).send('Unauthorized');
+  const turnstileOk = await verifyTurnstile(turnstileToken, req.headers['cf-connecting-ip'] || req.socket?.remoteAddress);
+  if (!turnstileOk) return res.status(400).send('Turnstile doğrulaması başarısız');
   if (!title || !content) return res.status(400).send('Missing title/content');
 
   const totalBytes = media.reduce((sum, m) => sum + (Number(m.size) || 0), 0);
