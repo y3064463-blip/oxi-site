@@ -72,7 +72,7 @@ if (!isVerified) {
 
     cfScript.onload = () => {
         turnstile.render('#cf-widget', {
-            sitekey: 'BURAYA_ALDIĞIN_SITE_KEY_GELECEK', // Anahtarını buraya eklemeyi unutma
+            sitekey: '0x4AAAAAACrp-vJ1dat6gVsL', // Anahtarını buraya eklemeyi unutma
             callback: function(token) {
                 sessionStorage.setItem('oxi_verified', 'true');
                 document.getElementById('auth-screen').style.display = 'none';
