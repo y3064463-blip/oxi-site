@@ -1,5 +1,6 @@
 const { ensureRepoEnv, writeJson } = require('../_repo');
 const { verifyGoogleIdToken } = require('../_auth');
+const { verifyTurnstile } = require('../_turnstile');
 
 function profilePath(email) {
   return `data/profiles/${encodeURIComponent(email)}.json`;
@@ -9,8 +10,10 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Only POST');
   if (!ensureRepoEnv()) return res.status(500).send('Missing GitHub env vars');
 
-  const { idToken, profile } = req.body || {};
+  const { idToken, turnstileToken, profile } = req.body || {};
   const user = await verifyGoogleIdToken(idToken);
+  const turnstileOk = await verifyTurnstile(turnstileToken, req.headers['cf-connecting-ip'] || req.socket?.remoteAddress);
+  if (!turnstileOk) return res.status(400).send('Turnstile doğrulaması başarısız');
   if (!user) return res.status(401).send('Unauthorized');
   if (!profile) return res.status(400).send('Missing profile');
 

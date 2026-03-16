@@ -1,12 +1,15 @@
 const { ensureRepoEnv, readJson, writeJson } = require('../_repo');
 const { verifyGoogleIdToken, isAdminEmail } = require('../_auth');
+const { verifyTurnstile } = require('../_turnstile');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Only POST');
   if (!ensureRepoEnv()) return res.status(500).send('Missing GitHub env vars');
 
-  const { idToken, name, description, url } = req.body || {};
+  const { idToken, turnstileToken, name, description, url } = req.body || {};
   const user = await verifyGoogleIdToken(idToken);
+  const turnstileOk = await verifyTurnstile(turnstileToken, req.headers['cf-connecting-ip'] || req.socket?.remoteAddress);
+  if (!turnstileOk) return res.status(400).send('Turnstile doğrulaması başarısız');
   if (!user) return res.status(401).send('Unauthorized');
   if (!isAdminEmail(user.email)) return res.status(403).send('Forbidden');
   if (!name || !description || !url) return res.status(400).send('Missing fields');
