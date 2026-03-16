@@ -56,4 +56,4 @@ async function writeJson(path, data, message) {
   return putContent(path, message, contentBase64, sha);
 }
 
-module.exports = { ensureRepoEnv, getContent, putContent, readJson, writeJson, branch, owner, repo };
+module.exports = { ensureRepoEnv, githubRequest, getContent, putContent, readJson, writeJson, branch, owner, repo };

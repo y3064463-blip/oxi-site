@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
   if (!fileName || !base64 || !size) return res.status(400).send('Missing upload fields');
   if (Number(size) > 150 * 1024 * 1024) return res.status(400).send('File exceeds 150MB limit');
 
-  const folder = section === 'apps' ? 'apps' : 'blog';
+  const folder = section === 'apps' ? 'apps' : section === 'profile' ? 'profiles' : 'blog';
   const path = `data/uploads/${folder}/${Date.now()}_${safeName(fileName)}`;
 
   try {

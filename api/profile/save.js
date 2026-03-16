@@ -1,21 +1,33 @@
-const { ensureEnv, profilePath, getFile, saveFile } = require('./_github');
+const { ensureRepoEnv, writeJson } = require('../_repo');
+const { verifyGoogleIdToken } = require('../_auth');
+
+function profilePath(email) {
+  return `data/profiles/${encodeURIComponent(email)}.json`;
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).send('Only POST');
-  if (!ensureEnv()) return res.status(500).send('Missing GitHub env vars');
+  if (!ensureRepoEnv()) return res.status(500).send('Missing GitHub env vars');
 
-  const { email, profile } = req.body || {};
-  if (!email || !profile) return res.status(400).send('Missing payload');
+  const { idToken, profile } = req.body || {};
+  const user = await verifyGoogleIdToken(idToken);
+  if (!user) return res.status(401).send('Unauthorized');
+  if (!profile) return res.status(400).send('Missing profile');
 
-  const path = profilePath(email);
-  const content = Buffer.from(JSON.stringify(profile, null, 2), 'utf8').toString('base64');
+  const nextProfile = {
+    email: user.email,
+    name: String(profile.name || user.name || '').slice(0, 80),
+    username: String(profile.username || '').replace(/[^a-zA-Z0-9._-]/g, '').slice(0, 30),
+    bio: String(profile.bio || '').slice(0, 300),
+    avatarUrl: String(profile.avatarUrl || '').slice(0, 2000),
+    coverUrl: String(profile.coverUrl || '').slice(0, 2000),
+    isPrivate: Boolean(profile.isPrivate),
+    updatedAt: new Date().toISOString()
+  };
 
   try {
-    const existing = await getFile(path);
-    const sha = existing?.sha;
-
-    await saveFile(path, `chore: update profile ${email}`, content, sha);
-    return res.status(200).json({ ok: true });
+    await writeJson(profilePath(user.email), nextProfile, `feat: update profile ${user.email}`);
+    return res.status(200).json({ ok: true, profile: nextProfile });
   } catch (error) {
     return res.status(500).json({ error: 'save-failed' });
   }
