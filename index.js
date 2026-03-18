@@ -13,7 +13,7 @@
   };
 
   const MB150 = 150 * 1024 * 1024;
-  const ADMIN_EMAIL_HINT = '';
+  const ADMIN_EMAIL_HINT = 'imahmut979@gmail.com';
 
   const style = document.createElement('style');
   style.textContent = `
